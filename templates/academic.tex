@@ -1,0 +1,71 @@
+%% academic.tex — shared report template
+%% Usage: pandoc report.md -o report.pdf --pdf-engine=xelatex \
+%%          --include-in-header=../templates/academic.tex \
+%%          -V geometry="margin=2.5cm" -V fontsize=11pt \
+%%          --highlight-style=tango --toc --toc-depth=2
+
+%% ── Typography ────────────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{setspace}
+\setstretch{1.15}
+
+%% ── Fonts ─────────────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}          % Times-like, widely available in TeX Live
+\setmonofont[Scale=0.88]{Source Code Pro}
+
+%% ── Subtle link colour only, no distracting colours elsewhere ─────────────────
+\usepackage{xcolor}
+\definecolor{linkblue}{HTML}{1a4f72}
+\definecolor{coderule} {HTML}{b0bec5}
+\definecolor{codebg}   {HTML}{f7f8f9}
+
+\AtBeginDocument{%
+  \hypersetup{colorlinks=true,linkcolor=linkblue,urlcolor=linkblue,citecolor=linkblue}%
+}
+
+%% ── Section headings — plain bold, no colour theatrics ────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}      {\large\bfseries}   {\thesection}{0.8em}{}[\vspace{1pt}\hrule\vspace{2pt}]
+\titleformat{\subsection}   {\normalsize\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\itshape} {\thesubsubsection}{0.8em}{}
+\titlespacing*{\section}      {0pt}{1.8ex plus .4ex minus .3ex}{0.6ex}
+\titlespacing*{\subsection}   {0pt}{1.3ex plus .3ex minus .2ex}{0.3ex}
+\titlespacing*{\subsubsection}{0pt}{1.0ex plus .2ex minus .1ex}{0.2ex}
+
+%% ── Code blocks — thin left rule, light background ────────────────────────────
+\usepackage{framed}
+\renewenvironment{Shaded}{%
+  \def\FrameCommand{%
+    {\color{coderule}\vrule width 2pt}\hspace{6pt}%
+    \colorbox{codebg}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+}{\endMakeFramed}
+
+%% ── Tables ────────────────────────────────────────────────────────────────────
+\usepackage{longtable,booktabs,array,colortbl}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.25}
+\arrayrulecolor{black!25}
+\setlength{\arrayrulewidth}{0.5pt}
+
+%% ── Header / footer ───────────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape\leftmark}
+\fancyhead[R]{\small\itshape Parallel \& Concurrent Programming}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%% ── Lists ─────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{nosep, topsep=3pt, itemsep=2pt}
+
+%% ── Figures ───────────────────────────────────────────────────────────────────
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, labelsep=period, skip=4pt}

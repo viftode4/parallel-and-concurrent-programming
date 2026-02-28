@@ -1,0 +1,32 @@
+# Makefile.template — copy to an assignment folder and set TITLE/AUTHOR/DATE
+# Usage: make report
+
+TITLE   ?= Assignment N: Title Here
+AUTHOR  ?= Parallel \& Concurrent Programming
+DATE    ?= $(shell date +"%B %Y")
+
+TEMPLATE := ../templates/academic.tex
+SRC      := report.md
+OUT      := report.pdf
+
+.PHONY: report clean
+
+report: $(OUT)
+
+$(OUT): $(SRC) $(TEMPLATE)
+	pandoc $(SRC) \
+	  -o $(OUT) \
+	  --pdf-engine=xelatex \
+	  --include-in-header=$(TEMPLATE) \
+	  -V geometry="margin=2.5cm" \
+	  -V fontsize=11pt \
+	  -V documentclass=article \
+	  -V title="$(TITLE)" \
+	  -V author="$(AUTHOR)" \
+	  -V date="$(DATE)" \
+	  --highlight-style=tango \
+	  --toc \
+	  --toc-depth=2
+
+clean:
+	rm -f $(OUT)
